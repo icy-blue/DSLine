@@ -435,7 +435,7 @@
       "__id__": 7
     },
     "_enabled": true,
-    "grpah": {
+    "graph": {
       "__id__": 10
     },
     "_id": "6enj4s65VLG55F7Ud8dntY"
@@ -455,7 +455,7 @@
       }
     ],
     "_prefab": null,
-    "_opacity": 0,
+    "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
