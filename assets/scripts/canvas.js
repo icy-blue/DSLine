@@ -27,8 +27,6 @@ cc.Class({
         if (this.nodeList.length !== 0) {
             this.drawPoint(this.nodeList[0], true);
         }
-        cc.log(this.nodeList);
-        cc.log(this.lineList);
         this.graphics.strokeColor = new cc.Color().fromHEX('#19ffe6');
         this.nodeList.sort((a, b) => a["y"] - b["y"]);
         this.lineList.sort((a, b) => a["nodeLow"] - b["nodeLow"]);
@@ -39,12 +37,10 @@ cc.Class({
                 cc.log("Error");
                 cc.log(node);
             }
-            // cc.log(i, this.nowLines);
             for (let item of node["lowList"]) {
                 item["scanning"] = item["nodeLow"]["x"];
                 this.nowLines.push(item);
             }
-            // cc.log(i, this.nowLines);
             for (let item of node["highList"]) {
                 let pos = this.nowLines.indexOf(item);
                 if (pos === -1) {
@@ -53,7 +49,6 @@ cc.Class({
                 }
                 this.nowLines.splice(pos, 1);
             }
-            // cc.log(i, this.nowLines);
             if (i !== this.nodeList.length - 1) {
                 this.drawRange(node["y"], this.nodeList[i + 1]["y"]);
             }
@@ -63,9 +58,7 @@ cc.Class({
     },
 
     drawRange(yLow, yHigh) {
-        // cc.log(yLow, yHigh);
         for (let i = yLow; i < yHigh; i++) {
-            // cc.log(i);
             // 我也想冒泡，但是js的交换需要手动写tamp，不好调整
             this.nowLines.sort((a, b) => a["scanning"] - b["scanning"]);
             for (let j = 0; j < this.nowLines.length; j++) {
@@ -77,9 +70,7 @@ cc.Class({
                 if (isNaN(this.nowLines[j]["delta"])) {
                     this.nowLines[j]["scanning"] = this.nowLines[j]["nodeHigh"]["x"];
                 } else {
-                    // cc.log(this.nowLines[j]["id"], this.nowLines[j]["scanning"], this.nowLines[j]["delta"]);
                     this.nowLines[j]["scanning"] += this.nowLines[j]["delta"];
-                    // cc.log("222", this.nowLines[j]["scanning"], this.nowLines[j]["delta"]);
                 }
             }
             this.graphics.stroke();
@@ -87,7 +78,6 @@ cc.Class({
     },
 
     onKeyDown(event) {
-        cc.log(event);
         if (this.isdrawing) return;
         if (event.keyCode !== cc.macro.KEY.space) return;
         this.draw();
@@ -107,7 +97,6 @@ cc.Class({
 
 
     drawPoint(node, isOld) {
-        // cc.log(this.drew);
         if (this.drew) {
             this.graphics.clear();
             this.drew = false;
@@ -128,7 +117,6 @@ cc.Class({
             line["nodeLow"] = low;
             line["degree"] = Math.atan2(high["x"] - low["x"], high["y"] - low["y"]);
             line["delta"] = (high["x"] - low["x"]) / (high["y"] - low["y"]);
-            // cc.log(line);
             high["highList"].push(line);
             low["lowList"].push(line);
             this.lineList.push(line);
@@ -138,6 +126,5 @@ cc.Class({
             this.graphics.moveTo(node["x"], node["y"]);
         }
         if (!isOld) this.nodeList.push(node);
-        // cc.log(this.nodeList);
     }
 });
